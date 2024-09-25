@@ -1,0 +1,133 @@
+.photo {
+  display: grid;
+  grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+  gap: 20px 16px;
+  margin: 0 auto;
+  max-width: 880px;
+  justify-content: center;
+}
+
+.photo__card {
+  border-radius: 10px;
+  max-width: 282px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.photo__card-title {
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  top: 0;
+  transform: translateY(-4px);
+  margin: 0;
+  height: 79px;
+  position: relative;
+}
+
+.photo__card-image {
+  max-width: 282px;
+  height: 282px;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.photo__text {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  width: fit-content;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  margin-top: 25px;
+  margin-left: 21px;
+}
+
+.photo__like {
+  border: 0;
+  background-image: url(../images/Vector.svg);
+  width: 21px;
+  height: 19px;
+  padding: 0;
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  top: 22px;
+  right: 18px;
+  background-color: white;
+}
+
+.photo__like:hover {
+  opacity: 0.6;
+}
+
+.photo__like_active {
+  background-image: url(../images/heartActive.png);
+}
+
+.photo__like-count {
+  text-align: center;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  padding-top: 3px;
+  margin: 0;
+  display: inline-block;
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+}
+
+.photo__delete {
+  border: 0;
+  background-image: url(../images/Trash.svg);
+  width: 21px;
+  height: 19px;
+  top: 16px;
+  right: 12px;
+  padding: 0;
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.photo__delete_hidden {
+  display: none;
+}
+
+.photo__delete:hover {
+  opacity: 0.6;
+}
+
+.photo__empty {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 50px;
+  color: white;
+  margin: auto;
+  text-align: center;
+  position: absolute;
+}
+
+@media screen and (max-width: 880px) {
+  .photo {
+    grid-template: repeat(3, 1fr) / 282px 282px;
+    width: calc(100% - 200px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .photo {
+    grid-template: repeat(6, 1fr) / 1fr;
+    justify-items: center;
+  }
+}

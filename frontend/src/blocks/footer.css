@@ -1,0 +1,38 @@
+.footer {
+  max-width: 880px;
+  margin: auto;
+  background-color: black;
+  height: fit-content;
+  padding: 0 20px;
+}
+
+.footer__copyright {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  color: rgba(84, 84, 84, 1);
+  line-height: 21px;
+  font-size: 18px;
+  margin: 0;
+  padding-top: 72px;
+  padding-bottom: 60px;
+}
+
+@media screen and (max-width: 880px) {
+  .footer {
+    width: 100%;
+  }
+
+  .footer__copyright {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .footer {
+    width: 100%;
+    padding: 0 20px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+  }
+}

@@ -1,0 +1,20 @@
+body {
+  background-color: black;
+}
+
+.page {
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.page__opacity-toggled {
+  opacity: 50%;
+}
+
+.page__opacity {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  background-color: black;
+  z-index: 1;
+}

@@ -1,0 +1,11 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/font.css);
+@import url(./blocks/page.css);
+@import url(./blocks/nav.css);
+@import url(./blocks/user.css);
+@import url(./blocks/photo.css);
+@import url(./blocks/footer.css);
+@import url(./blocks/form.css);
+@import url(./blocks/popup.css);
+@import url(./blocks/tooltip.css);
+@import url(./blocks/register.css);

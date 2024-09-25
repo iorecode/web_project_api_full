@@ -1,0 +1,69 @@
+.nav {
+  width: 100%; /* Deixe a largura da navegação ser sempre 100% da tela */
+  max-width: 880px; /* Limita a largura máxima para 880px */
+  margin: 0 auto; /* Centraliza o conteúdo da nav horizontalmente */
+  padding-top: 45px;
+  border-bottom: 1px solid #545454a1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Garante que os elementos estejam alinhados verticalmente */
+}
+
+.nav__logo {
+  max-width: 173px;
+  max-height: 33px;
+  margin-left: 0; /* Remove margens extras */
+}
+
+.nav__user {
+  color: white;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.nav__user:hover {
+  font-weight: 900;
+}
+
+.nav__user-logout {
+  text-decoration: underline;
+  font-weight: 900;
+}
+
+@media screen and (max-width: 880px) {
+  .nav {
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .nav__user {
+    position: relative;
+    right: 0;
+    margin-left: auto;
+  }
+
+  .nav__logo {
+    position: relative;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .nav {
+    width: 90%;
+  }
+
+  .nav__logo {
+    padding-left: 16px;
+    max-width: 128px;
+    max-height: 26px;
+  }
+
+  .nav__user {
+    padding-right: 16px;
+    margin-top: 24px;
+  }
+}
