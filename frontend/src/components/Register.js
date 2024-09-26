@@ -36,7 +36,7 @@ export function Register({ onRegister }) {
 
     if (validatePassword(cleanPassword) && validateEmail(cleanEmail)) {
       setIsSubmitting(true);
-      register(cleanEmail, cleanPassword)
+      register({ email: cleanEmail, password: cleanPassword })
         .then((res) => {
           onRegister(true, "Vitória! Você precisa entrar.", successCheckImage);
           console.log("Registro bem-sucedido:", res);
