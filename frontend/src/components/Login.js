@@ -28,8 +28,6 @@ export function Login({ onLogin, setIsLoggedIn }) {
       password: cleanPassword,
     })
       .then((res) => {
-        setEmail("");
-        setPassword("");
         console.log("Login bem-sucedido:", res);
         onLogin(true, "Login bem-sucedido!", successCheckImage);
         setIsLoggedIn(true); // Atualiza o estado de autenticação
@@ -39,7 +37,11 @@ export function Login({ onLogin, setIsLoggedIn }) {
         onLogin(false, "Erro no login", failureCheckImage);
         console.error("Erro no login:", err);
       })
-      .finally(() => setIsSubmitting(false));
+      .finally(() => {
+        setIsSubmitting(false);
+        setEmail("");
+        setPassword("");
+      });
   };
 
   const buttonClass = `register__button ${

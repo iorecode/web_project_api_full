@@ -38,8 +38,6 @@ export function Register({ onRegister }) {
       setIsSubmitting(true);
       register(cleanEmail, cleanPassword)
         .then((res) => {
-          setEmail("");
-          setPassword("");
           onRegister(true, "Vitória! Você precisa entrar.", successCheckImage);
           console.log("Registro bem-sucedido:", res);
         })
@@ -52,7 +50,11 @@ export function Register({ onRegister }) {
             failureCheckImage
           );
         })
-        .finally(() => setIsSubmitting(false));
+        .finally(() => {
+          setIsSubmitting(false);
+          setEmail("");
+          setPassword("");
+        });
     } else if (!validateEmail(cleanEmail)) {
       onRegister(false, "Insira um E-mail valido", failureCheckImage);
     } else if (!validatePassword(cleanPassword)) {

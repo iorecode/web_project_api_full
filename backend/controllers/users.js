@@ -66,6 +66,10 @@ module.exports.createUser = async (req, res, next) => {
   try {
     const { name, about, avatar, email, password } = req.body;
 
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      throw new CustomError("Usuário com este email já existe", 409);
+    }
     const hashedPassword = await bcrypt.hash(password, 10); // Senhas sao salvas em hash + salt
 
     const user = new User({
