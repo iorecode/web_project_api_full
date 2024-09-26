@@ -7,7 +7,7 @@ const auth = require("./middleware/auth");
 const app = express();
 const { PORT = 3000 } = process.env;
 const errorManagement = require("./middleware/errorManagement");
-const { requestLogger, errorLogger } = require("./middleware/logGeneration");
+const logger = require("./middleware/logGeneration");
 const userControllers = require("./controllers/users");
 
 // Inicializa o Express
@@ -27,7 +27,7 @@ mongoose
     console.error("Erro ao conectar ao MongoDB:", err);
   });
 
-app.use(requestLogger);
+app.use(logger.requestLogger);
 
 // Rota post em signin para realizar o login
 app.post("/signin", userControllers.login);
@@ -39,7 +39,7 @@ app.use("/users", auth, require("./routes/users"));
 // Rotra protegida para os cards
 app.use("/cards", auth, require("./routes/cards"));
 
-app.use(errorLogger);
+app.use(logger.errorLogger);
 
 app.use(errors());
 
