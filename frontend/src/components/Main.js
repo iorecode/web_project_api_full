@@ -61,15 +61,19 @@ function Main({
         <button className="user__add" onClick={onAddPlaceClick}></button>
       </div>
       <div className="photo">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
-            onCardClick={onCardClick}
-          />
-        ))}
+        {Array.isArray(cards) ? (
+          cards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
+              onCardClick={onCardClick}
+            />
+          ))
+        ) : (
+          <p>Nenhum cartão disponível</p> // ou algum outro fallback
+        )}
       </div>
     </>
   );

@@ -43,7 +43,7 @@
 
 @media screen and (max-width: 880px) {
   .tooltip {
-    width: 90%;
+    width: 70%;
   }
 
   .tooltip__image {

@@ -193,7 +193,8 @@ function App() {
       api
         .getCardList()
         .then((cardList) => {
-          setCards(cardList);
+          console.log(cardList);
+          setCards(Array.isArray(cardList) ? cardList : []);
         })
         .catch((err) => {
           console.log("Erro ao buscar cartões: ", err);

@@ -39,6 +39,7 @@ export function Register({ onRegister }) {
       register({ email: cleanEmail, password: cleanPassword })
         .then((res) => {
           onRegister(true, "Vitória! Você precisa entrar.", successCheckImage);
+          navigate("/signin");
           console.log("Registro bem-sucedido:", res);
         })
         .catch((err) => {

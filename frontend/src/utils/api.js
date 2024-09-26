@@ -33,6 +33,7 @@ class API {
       headers: this._headers,
     })
       .then(this._checkResponse)
+      .then((res) => res.data) // Acessa a chave "data"
       .catch((err) => {
         console.error("Error in getCardList:", err);
         return Promise.reject(err);
