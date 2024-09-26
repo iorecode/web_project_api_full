@@ -11,7 +11,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import { EditProfilePopup } from "./EditProfilePopup";
 import { EditAvatarPopup } from "./EditAvatarPopup";
 import { AddPlacePopup } from "./AddPlacePopup";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useNavigate, Route, Routes, useLocation } from "react-router-dom";
 import { Login } from "./Login";
 import { Register } from "./Register";
 import InfoTooltip from "./InfoTooltip";
@@ -35,6 +35,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navText, setNavText] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -50,13 +51,17 @@ function App() {
         .catch((err) => {
           console.error("Erro ao verificar o token:", err);
           setIsLoggedIn(false);
-          navigate("/signin");
+          if (location.pathname !== "/signup") {
+            navigate("/signin");
+          }
         });
     } else {
       setIsLoggedIn(false);
-      navigate("/signin");
+      if (location.pathname !== "/signup") {
+        navigate("/signin");
+      }
     }
-  }, [navigate, isLoggedIn]); // Add navigate here
+  }, [navigate, isLoggedIn, location.pathname]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
