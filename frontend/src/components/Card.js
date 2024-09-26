@@ -48,7 +48,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           className={cardLikeButtonClassName}
           onClick={handleLikeClick}
         ></button>
-        <p className="photo__like-count">{card.likes.length}</p>
+        <p className="photo__like-count">
+          {Array.isArray(card.likes) ? card.likes.length : 0}
+        </p>
       </div>
     </div>
   );

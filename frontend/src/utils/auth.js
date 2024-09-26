@@ -39,6 +39,7 @@ export const login = async ({ email, password }) => {
     const data = await res.json();
     if (data.token) {
       localStorage.setItem("jwt", data.token);
+      console.log("Token colocado");
       return data;
     } else {
       throw new Error("Token não encontrado na resposta");
