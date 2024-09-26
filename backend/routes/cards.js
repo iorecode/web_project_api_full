@@ -1,18 +1,12 @@
 const express = require("express");
-const {
-  getAllCards,
-  createCard,
-  deleteCard,
-  addCardLike,
-  removeCardLike,
-} = require("../controllers/cards.js");
+const cardControllers = require("../controllers/cards.js");
 const { celebrate, Joi } = require("celebrate");
 const { validateURL } = require("../utils/utils.js");
 
 const router = express.Router();
 
 // Rota GET para receber todos os cards
-router.get("/", getAllCards);
+router.get("/", cardControllers.getAllCards);
 
 // Rota POST para criar um card
 router.post(
@@ -23,7 +17,7 @@ router.post(
       link: Joi.string().custom(validateURL).required(),
     }),
   }),
-  createCard
+  cardControllers.createCard
 );
 
 // Rota DELETE para deletar um card
@@ -34,7 +28,7 @@ router.delete(
       cardId: Joi.string().hex().length(24).required(),
     }),
   }),
-  deleteCard
+  cardControllers.deleteCard
 );
 
 // Rota PUT para adicionar um like
@@ -45,7 +39,7 @@ router.put(
       cardId: Joi.string().hex().length(24).required(),
     }),
   }),
-  addCardLike
+  cardControllers.addCardLike
 );
 
 // Rota DELETE para remover um like
@@ -56,7 +50,7 @@ router.delete(
       cardId: Joi.string().hex().length(24).required(),
     }),
   }),
-  removeCardLike
+  cardControllers.removeCardLike
 );
 
 module.exports = router;

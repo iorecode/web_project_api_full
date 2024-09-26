@@ -1,21 +1,15 @@
 const express = require("express");
-const {
-  getAllUsers,
-  getUserById,
-  updateUserAvatar,
-  updateUserInfo,
-  getProfile,
-} = require("../controllers/users.js");
+const userControllers = require("../controllers/users.js");
 const { celebrate, Joi } = require("celebrate");
 const { validateURL } = require("../utils/utils.js");
 
 const router = express.Router();
 
 // Rota GET para buscar todos os usuários
-router.get("/", getAllUsers);
+router.get("/", userControllers.getAllUsers);
 
 // Rota GET para buscar o perfil do usuário atual
-router.get("/me", getProfile);
+router.get("/me", userControllers.getProfile);
 
 // Rota GET para buscar um usuário por ID
 router.get(
@@ -25,7 +19,7 @@ router.get(
       id: Joi.string().hex().length(24).required(),
     }),
   }),
-  getUserById
+  userControllers.getUserById
 );
 
 // Rota PATCH para atualizar dados de usuário
@@ -37,7 +31,7 @@ router.patch(
       about: Joi.string().min(2).max(30).required(),
     }),
   }),
-  updateUserInfo
+  userControllers.updateUserInfo
 );
 
 // Rota PATCH para atualizar avatar
@@ -48,7 +42,7 @@ router.patch(
       avatar: Joi.string().custom(validateURL).required(),
     }),
   }),
-  updateUserAvatar
+  userControllers.updateUserAvatar
 );
 
 module.exports = router;

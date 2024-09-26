@@ -4,11 +4,11 @@ const cors = require("cors");
 const { errors } = require("celebrate");
 require("dotenv").config();
 const auth = require("./middleware/auth");
-const { login, createUser } = require("./controllers/users");
 const app = express();
 const { PORT = 3000 } = process.env;
 const errorManagement = require("./middleware/errorManagement");
 const { requestLogger, errorLogger } = require("./middleware/logGeneration");
+const userControllers = require("./controllers/users");
 
 // Inicializa o Express
 app.use(express.json());
@@ -30,9 +30,9 @@ mongoose
 app.use(requestLogger);
 
 // Rota post em signin para realizar o login
-app.post("/signin", login);
+app.post("/signin", userControllers.login);
 // Rota post em signup para criar o usuario
-app.post("/signup", createUser);
+app.post("/signup", userControllers.createUser);
 
 // Rota protegida para usuarios
 app.use("/users", auth, require("./routes/users"));
