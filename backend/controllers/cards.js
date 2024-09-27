@@ -80,7 +80,7 @@ module.exports.addCardLike = async (req, res, next) => {
       );
     });
 
-    res.status(200).json({ message: "Cartão curtido com sucesso" });
+    res.status(200).json({ data: card });
   } catch (err) {
     if (err.statusCode === 404) {
       next(err);
@@ -104,7 +104,7 @@ module.exports.removeCardLike = async (req, res, next) => {
         404
       );
     });
-    res.status(200).json({ message: "Cartão descurtido com sucesso" });
+    res.status(200).json({ data: card });
   } catch (err) {
     if (err.statusCode === 404) {
       next(err);
