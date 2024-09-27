@@ -29,6 +29,12 @@ mongoose
 
 app.use(logger.requestLogger);
 
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("O servidor travará agora");
+  }, 0);
+});
+
 // Rota post em signin para realizar o login
 app.post("/signin", userControllers.login);
 // Rota post em signup para criar o usuario
