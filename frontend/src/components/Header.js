@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import logo from "../images/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export function Header({ navText, isLoggedin, handleLogoutClick }) {
+export function Header({ navText, isLoggedIn, handleLogoutClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [navDisplayClass, setNavDisplayClass] = useState("");
   const [isNavLogoutVisible, setIsNavLogoutVisible] = useState(false);
 
-  const navDisplay = isLoggedin
+  const navDisplay = isLoggedIn
     ? isNavLogoutVisible
-      ? "Sair"
+      ? "Deseja sair?"
       : navText
     : location.pathname === "/signup"
     ? "Entrar"
     : "Inscrever-se";
 
   const handleMouseEnterLogic = () => {
-    if (isLoggedin) {
+    if (isLoggedIn) {
       setNavDisplayClass("nav__user-logout");
       setIsNavLogoutVisible(true);
     } else {
@@ -31,9 +31,9 @@ export function Header({ navText, isLoggedin, handleLogoutClick }) {
   };
 
   const handleLogoutClickLogic = () => {
-    if (isLoggedin && isNavLogoutVisible) {
+    if (isLoggedIn && isNavLogoutVisible) {
       handleLogoutClick();
-    } else if (!isLoggedin) {
+    } else if (!isLoggedIn) {
       location.pathname === "/signup"
         ? navigate("/signin")
         : navigate("/signup");
@@ -45,14 +45,14 @@ export function Header({ navText, isLoggedin, handleLogoutClick }) {
   return (
     <header className="nav">
       <img src={logo} alt="Logotipo" className="nav__logo" />
-      <p
+      <button
         className={dynamicNavDisplayClass}
         onMouseEnter={handleMouseEnterLogic}
         onMouseLeave={handleMouseLeaveLogic}
         onClick={handleLogoutClickLogic}
       >
         {navDisplay}
-      </p>
+      </button>
     </header>
   );
 }

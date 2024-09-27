@@ -34,7 +34,6 @@ class API {
     })
       .then(this._checkResponse)
       .then((res) => {
-        console.log(res.data);
         return res.data;
       }) // Acessa a chave "data"
       .catch((err) => {
@@ -93,6 +92,9 @@ class API {
       body: JSON.stringify({ name, link }),
     })
       .then(this._checkResponse)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         console.error("Error in addNewCard:", err);
         return Promise.reject(err);
@@ -117,6 +119,9 @@ class API {
       headers: this._headers,
     })
       .then(this._checkResponse)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         console.error("Error in addLike:", err);
         return Promise.reject(err);
@@ -129,6 +134,9 @@ class API {
       headers: this._headers,
     })
       .then(this._checkResponse)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         console.error("Error in removeLike:", err);
         return Promise.reject(err);

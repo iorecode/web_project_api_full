@@ -39,7 +39,6 @@ export const login = async ({ email, password }) => {
     const data = await res.json();
     if (data.token) {
       localStorage.setItem("jwt", data.token);
-      console.log("Token colocado");
       return data;
     } else {
       throw new Error("Token não encontrado na resposta");
@@ -61,11 +60,8 @@ export const verifyUser = async () => {
       },
     });
 
-    console.log("Verificando usuário, status da resposta:", res.status); // Adicione esse log
-
     if (!res.ok) {
       if (res.status === 401) {
-        console.log("Token expirado ou inválido. Removendo token.");
         localStorage.removeItem("jwt");
         window.location.href = "/signin";
       } else {
@@ -76,7 +72,6 @@ export const verifyUser = async () => {
 
     const data = await res.json();
     if (data.data) {
-      console.log("Dados do usuário:", data.data); // Verifique o que está sendo retornado
       return data;
     } else {
       throw new Error("Dados do usuário não encontrados na resposta");

@@ -16,11 +16,16 @@
 }
 
 .nav__user {
+  background: transparent;
+  border: none;
   color: white;
   font-family: "Inter", Arial, sans-serif;
   font-weight: 400;
   font-size: 18px;
   cursor: pointer;
+  width: 300px;
+  padding: 10px;
+  text-align: right;
 }
 
 .nav__user:hover {

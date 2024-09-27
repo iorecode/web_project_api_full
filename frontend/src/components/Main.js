@@ -13,6 +13,7 @@ function Main({
   onCardClick,
 }) {
   const currentUser = useContext(CurrentUserContext);
+
   const [isEditDisplayed, setIsEditDisplayed] = useState(false);
   const avatarClassName = `user__image-main ${
     isEditDisplayed ? "user__image-main_transparent" : ""
@@ -62,15 +63,19 @@ function Main({
       </div>
       <div className="photo">
         {Array.isArray(cards) ? (
-          cards.map((card) => (
-            <Card
-              key={card._id}
-              card={card}
-              onCardLike={onCardLike}
-              onCardDelete={onCardDelete}
-              onCardClick={onCardClick}
-            />
-          ))
+          cards
+            .filter((card) => card && card._id)
+            .map((card) => {
+              return (
+                <Card
+                  key={card._id}
+                  card={card}
+                  onCardLike={onCardLike}
+                  onCardDelete={onCardDelete}
+                  onCardClick={onCardClick}
+                />
+              );
+            })
         ) : (
           <p>Nenhum cartão disponível</p>
         )}

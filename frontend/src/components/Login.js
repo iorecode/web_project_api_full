@@ -4,7 +4,13 @@ import { login } from "../utils/auth";
 import successCheckImage from "../images/successCheck.png";
 import failureCheckImage from "../images/failureCheck.png";
 
-export function Login({ onLogin, setIsLoggedIn }) {
+export function Login({
+  onLogin,
+  setIsLoggedIn,
+  onLoginSuccess,
+  setCurrentUser,
+  verifyUser,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,10 +34,15 @@ export function Login({ onLogin, setIsLoggedIn }) {
       password: cleanPassword,
     })
       .then((res) => {
-        console.log("Login bem-sucedido:");
+        localStorage.setItem("jwt", res.token); // Save the token in localStorage
+        return verifyUser(); // Call verifyUser to get the user's data
+      })
+      .then((userRes) => {
+        setCurrentUser(userRes.data); // Set the current user data
         onLogin(true, "Login bem-sucedido!", successCheckImage);
-        setIsLoggedIn(true); // Atualiza o estado de autenticação
-        navigate("/");
+        setIsLoggedIn(true); // Set the user as logged in
+        onLoginSuccess(cleanEmail);
+        navigate("/"); // Redirect to home
       })
       .catch((err) => {
         onLogin(false, "Erro no login", failureCheckImage);

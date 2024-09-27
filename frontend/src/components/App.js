@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import "./App.css";
 import { Header } from "./Header";
@@ -30,39 +30,41 @@ function App() {
     image: "",
     isSuccess: false,
   });
-  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [navText, setNavText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Verificação do token e login automático
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    console.log(isLoggedIn);
-    if (token) {
+
+    if (token && !isLoggedIn) {
+      // Verifica se já não esta logado
       verifyUser()
         .then((res) => {
           if (res && res.data) {
             setCurrentUser(res.data);
             setNavText(res.data.email);
             setIsLoggedIn(true);
+            navigate("/"); // Redireciona para a página principal se o login for bem sucedido
           }
         })
         .catch((err) => {
-          console.error("Erro ao verificar o token:", err);
+          console.error("Token inválido ou expirado, redirecionando:", err);
           setIsLoggedIn(false);
+          localStorage.removeItem("jwt"); // Remove o token inválido
           if (location.pathname !== "/signup") {
             navigate("/signin");
           }
         });
-    } else {
+    } else if (!token && location.pathname !== "/signup") {
+      // Redireciona para o login apenas se não houver token e o usuário não estiver na página de cadastro
       setIsLoggedIn(false);
-      if (location.pathname !== "/signup") {
-        navigate("/signin");
-      }
+      navigate("/signin");
     }
-  }, [navigate, location.pathname]);
+  }, [isLoggedIn, location.pathname, navigate, currentUser]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -98,7 +100,10 @@ function App() {
     api
       .addNewCard({ name, link })
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards((prevCards) => {
+          const updatedCards = [newCard, ...prevCards];
+          return updatedCards;
+        });
         closeAllPopups();
       })
       .catch((err) => {
@@ -111,7 +116,6 @@ function App() {
       .saveProfileChanges({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
-        console.log("handleUpdateUser");
         closeAllPopups();
       })
       .catch((err) => {
@@ -130,18 +134,24 @@ function App() {
         console.error("Erro ao atualizar avatar:", err);
       });
   }
-
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some(
+      (like) => like === currentUser._id || like._id === currentUser._id
+    );
     api
       .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
+      .then((response) => {
+        const newCard = response;
+        if (newCard) {
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard : c))
+          );
+        } else {
+          console.error("API não retornou um card válido.", newCard);
+        }
       })
       .catch((err) => {
-        console.error("Erro ao alterar status do like:", err);
+        console.error("Erro ao alterar o status de like:", err);
       });
   }
 
@@ -159,19 +169,20 @@ function App() {
   function handleLogout() {
     setIsLoggedIn(false);
     localStorage.removeItem("jwt");
+    setCurrentUser({}); // Reset currentUser on logout
     setNavText("Entrar");
     navigate("/signin");
   }
 
-  useEffect(() => {
-    const isOpen =
+  const isAnyPopupOpen = useMemo(() => {
+    return (
       isEditProfilePopupOpen ||
       isAddPlacePopupOpen ||
       isEditAvatarPopupOpen ||
       selectedCard !== null ||
       isSubmitCheckPopupOpen ||
-      isTooltipOpen;
-    setIsAnyPopupOpen(isOpen);
+      isTooltipOpen
+    );
   }, [
     isEditProfilePopupOpen,
     isAddPlacePopupOpen,
@@ -184,17 +195,8 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       api
-        .getUserData()
-        .then((data) => {
-          setCurrentUser(data);
-        })
-        .catch((err) => {
-          console.log("Erro ao pegar dados de usuario: ", err);
-        });
-      api
         .getCardList()
         .then((cardList) => {
-          console.log(cardList);
           setCards(Array.isArray(cardList) ? cardList : []);
         })
         .catch((err) => {
@@ -237,7 +239,10 @@ function App() {
             element={
               <Login
                 onLogin={handleRegisterResult}
+                onLoginSuccess={setNavText}
                 setIsLoggedIn={setIsLoggedIn}
+                setCurrentUser={setCurrentUser}
+                verifyUser={verifyUser}
               />
             }
           />

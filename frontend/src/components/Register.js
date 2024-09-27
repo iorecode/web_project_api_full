@@ -40,7 +40,6 @@ export function Register({ onRegister }) {
         .then((res) => {
           onRegister(true, "Vitória! Você precisa entrar.", successCheckImage);
           navigate("/signin");
-          console.log("Registro bem-sucedido:", res);
         })
         .catch((err) => {
           setEmail("");
