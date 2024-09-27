@@ -28,7 +28,7 @@ export function Login({ onLogin, setIsLoggedIn }) {
       password: cleanPassword,
     })
       .then((res) => {
-        console.log("Login bem-sucedido:", res);
+        console.log("Login bem-sucedido:");
         onLogin(true, "Login bem-sucedido!", successCheckImage);
         setIsLoggedIn(true); // Atualiza o estado de autenticação
         navigate("/");

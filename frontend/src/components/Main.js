@@ -72,7 +72,7 @@ function Main({
             />
           ))
         ) : (
-          <p>Nenhum cartão disponível</p> // ou algum outro fallback
+          <p>Nenhum cartão disponível</p>
         )}
       </div>
     </>

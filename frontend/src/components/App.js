@@ -39,6 +39,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
+    console.log(isLoggedIn);
     if (token) {
       verifyUser()
         .then((res) => {
@@ -61,7 +62,7 @@ function App() {
         navigate("/signin");
       }
     }
-  }, [navigate, isLoggedIn, location.pathname]);
+  }, [navigate, location.pathname]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -106,10 +107,11 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
-    api
+    return api
       .saveProfileChanges({ name, about })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
+        console.log("handleUpdateUser");
         closeAllPopups();
       })
       .catch((err) => {
@@ -118,7 +120,7 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
-    api
+    return api
       .updateAvatar({ avatar })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
@@ -189,7 +191,6 @@ function App() {
         .catch((err) => {
           console.log("Erro ao pegar dados de usuario: ", err);
         });
-
       api
         .getCardList()
         .then((cardList) => {

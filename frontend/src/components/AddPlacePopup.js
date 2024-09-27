@@ -19,6 +19,8 @@ export function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name: title,
       link: link,
     });
+    setTitle(""); // Limpa o título
+    setLink(""); // Limpa o link
   }
 
   return (

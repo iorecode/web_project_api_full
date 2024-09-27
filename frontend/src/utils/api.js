@@ -33,7 +33,10 @@ class API {
       headers: this._headers,
     })
       .then(this._checkResponse)
-      .then((res) => res.data) // Acessa a chave "data"
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      }) // Acessa a chave "data"
       .catch((err) => {
         console.error("Error in getCardList:", err);
         return Promise.reject(err);
@@ -58,6 +61,9 @@ class API {
       body: JSON.stringify({ name, about }),
     })
       .then(this._checkResponse)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         console.error("Error in saveProfileChanges:", err);
         return Promise.reject(err);
@@ -71,6 +77,9 @@ class API {
       body: JSON.stringify({ avatar }),
     })
       .then(this._checkResponse)
+      .then((res) => {
+        return res.data;
+      })
       .catch((err) => {
         console.error("Error in updateAvatar:", err);
         return Promise.reject(err);
