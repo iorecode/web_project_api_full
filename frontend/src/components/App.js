@@ -101,7 +101,7 @@ function App() {
       .addNewCard({ name, link })
       .then((newCard) => {
         setCards((prevCards) => {
-          const updatedCards = [...prevCards, newCard];
+          const updatedCards = [newCard, ...prevCards];
           return updatedCards;
         });
         closeAllPopups();
@@ -197,7 +197,8 @@ function App() {
       api
         .getCardList()
         .then((cardList) => {
-          setCards(Array.isArray(cardList) ? cardList : []);
+          const reversedCardList = cardList.reverse();
+          setCards(Array.isArray(reversedCardList) ? reversedCardList : []);
         })
         .catch((err) => {
           console.log("Erro ao buscar cartões: ", err);

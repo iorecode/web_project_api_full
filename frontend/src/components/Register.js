@@ -25,7 +25,7 @@ export function Register({ onRegister }) {
 
   function validatePassword(password) {
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
     return passwordRegex.test(password);
   }
 
@@ -33,7 +33,7 @@ export function Register({ onRegister }) {
     e.preventDefault();
     const cleanEmail = email.trim();
     const cleanPassword = password.trim();
-
+    console.log(validatePassword("Test@1234"));
     if (validatePassword(cleanPassword) && validateEmail(cleanEmail)) {
       setIsSubmitting(true);
       register({ email: cleanEmail, password: cleanPassword })
