@@ -101,7 +101,7 @@ function App() {
       .addNewCard({ name, link })
       .then((newCard) => {
         setCards((prevCards) => {
-          const updatedCards = [newCard, ...prevCards];
+          const updatedCards = [...prevCards, newCard];
           return updatedCards;
         });
         closeAllPopups();
